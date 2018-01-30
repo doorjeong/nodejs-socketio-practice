@@ -6,12 +6,27 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         window.onload = function(){
-            var socket = io.connect();
-            console.log('socket.io public 방식');
+            var socket = io.connect(); // 소켓 통신 연결
+
+            // 클라이너트쪽 이벤트 정의
+            socket.on('clientEvt', function(data){
+                alert(data);
+            });
+
+            // 전송 버튼 클릭
+            document.getElementById('btnSend').onclick = function(){
+                var txt = document.getElementById('content').value;
+                socket.emit('serverEvt', txt); // 서버쪽 이벤트 발생
+            }
         }
     </script>
 </head>
 <body>
-    socket.io public 방식
+    <h1>socket.io</h1>
+    <h2>public 방식</h2>
+    <div>
+        <input type="text" id="content" />
+        <input type="button" id="btnSend" value="전송" />
+    </div>
 </body>
 </html>

@@ -14,5 +14,12 @@ var server = http.createServer(function(request, response){
 // 소켓 서버 생성 및 실행
 var io = socketio.listen(server);
 io.sockets.on('connection', function(socket){
-    console.log('socket.io 정상 접속 완료');
+    // 서버쪽 이벤트 정의
+    socket.on('serverEvt', function(data){
+        console.log('Client Send data: ', data);
+
+        // 클리언트쪽 이벤트 발생
+        // socket.emit('clientEvt', data);
+        io.sockets.emit('clientEvt', data);
+    })
 });
