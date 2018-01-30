@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-socketio-practice",
+  "version": "0.0.1",
+  "description": "nodejs study socketio practice example source",
+  "main": "index.js",
+  "dependencies": {
+    "socket.io": "^1.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeobiya/nodejs-socketio-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yeobiya/nodejs-socketio-practice/issues"
+  },
+  "homepage": "https://github.com/yeobiya/nodejs-socketio-practice#readme"
+}
