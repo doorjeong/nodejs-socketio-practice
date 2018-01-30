@@ -19,7 +19,8 @@ io.sockets.on('connection', function(socket){
         console.log('Client Send data: ', data);
 
         // 클리언트쪽 이벤트 발생
-        // socket.emit('clientEvt', data);
-        io.sockets.emit('clientEvt', data);
+        // socket.emit('clientEvt', data); // private 통신
+        // io.sockets.emit('clientEvt', data); // public 통신
+        socket.broadcast.emit('clientEvt', data); // broadcast 통신
     })
 });
