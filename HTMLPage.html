@@ -21,14 +21,18 @@
             });
 
             $("#btnSend").on("click", function(){
-                var usrName = $("#usrName").val();
-                var usrMsg = $("#usrMsg").val();
+                var $usrName = $("#usrName");
+                var usrName = $usrName.val();
+                var $usrMsg = $("#usrMsg");
+                var usrMsg = $usrMsg.val();
                 if( usrName && usrMsg ){
                     socket.emit('sendMsg', {
                         name: usrName,
                         message: usrMsg,
                         date: new Date().toUTCString()
                     });
+                    $usrName.val('');
+                    $usrMsg.val('');
                 } else {
                     alert('닉네임이나 메시지를 입력해주세요.');
                 }
