@@ -2,31 +2,39 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title> socket.io public </title>
+    <title> socket.io :: room </title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        window.onload = function(){
-            var socket = io.connect(); // 소켓 통신 연결
+        var room;
+        var socket;
+        $(document).ready(function(){
+            room = prompt('방 이름을 입력하세요', '');
 
-            // 클라이너트쪽 이벤트 정의
-            socket.on('clientEvt', function(data){
-                alert(data);
+            socket = io.connect(); // 서버쪽의 io.sockets의 connection 이벤트 발생
+
+
+            socket.on('outputMsg', function(data){
+                $('<li>' + data + '</li>').appendTo('#list');
+                console.log(data);
+                // alert(data);
             });
 
-            // 전송 버튼 클릭
-            document.getElementById('btnSend').onclick = function(){
-                var txt = document.getElementById('content').value;
-                socket.emit('serverEvt', txt); // 서버쪽 이벤트 발생
-            }
-        }
+            $("#btnSend").on('click', function(){
+                socket.emit('join', room); // 서버쪽에서 입력받은 방이름으로 join시켜주는 이벤트 발생
+                socket.emit('sendMsg', $('#content').val());
+            });
+        });
     </script>
 </head>
 <body>
     <h1>socket.io</h1>
-    <h2>public 방식</h2>
-    <div>
+    <h2>room</h2>
+    <div class="wrap">
         <input type="text" id="content" />
         <input type="button" id="btnSend" value="전송" />
+        <ul id="list">
+        </ul>
     </div>
 </body>
 </html>
