@@ -3,39 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <title> socket.io :: room </title>
+    <link rel="shortcut icon" href="http://www.e-mirim.hs.kr/favicon.ico" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var room;
-        var socket;
         $(document).ready(function(){
-            room = prompt('방 이름을 입력하세요', '');
-
-            socket = io.connect(); // 서버쪽의 io.sockets의 connection 이벤트 발생
-
+            var socket = io.connect();
 
             socket.on('outputMsg', function(data){
-                $('<li>' + data + '</li>').appendTo('#list');
-                console.log(data);
-                // alert(data);
+                var html = '';
+                html += '<li>';
+                html += '   <strong class="name">' + data.name + '</strong>';
+                html += '   <p class="msg">' + data.message + '</p>';
+                html += '   <span class="date">' + data.date + '</p>';
+                html += '</li>';
+                $(html).prependTo('#content');
             });
 
-            $("#btnSend").on('click', function(){
-                // 원래는 프롬프르 입력받은 후 바로 join해도 되지만 크롬에서 파비콘 때문에 request 요청이 한 번 더 일어나서 방이름(room)이 제대로 전달이 안된다. 그래서 전송할때마다 join
-                socket.emit('join', room); // 서버쪽에서 입력받은 방이름으로 join시켜주는 이벤트 발생
-                socket.emit('sendMsg', $('#content').val());
+            $("#btnSend").on("click", function(){
+                socket.emit('sendMsg', {
+                    name: name,
+                    message: message,
+                    date: new Date().toUTCString()
+                });
             });
         });
     </script>
 </head>
 <body>
-    <h1>socket.io</h1>
-    <h2>room</h2>
-    <div class="wrap">
-        <input type="text" id="content" />
-        <input type="button" id="btnSend" value="전송" />
-        <ul id="list">
-        </ul>
-    </div>
+    <h1>socket.io Web Chatting</h1>
+    <p>Chat With Node.js</p>
+    <hr / />
+    <input type="text" id="usrName" placeholder="닉네임" />
+    <input type="text" id="usrMsg" placeholder="메시지" />
+    <button type="button" id="btnSend">전송</button>
+    <ul id="content">
+    </ul>
 </body>
 </html>
