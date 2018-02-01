@@ -2,9 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title> socket.io :: room </title>
+    <title> socket.io :: Web Chatting </title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
     <link rel="shortcut icon" href="http://www.e-mirim.hs.kr/favicon.ico" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function(){
@@ -18,11 +21,11 @@
                 html += '   <span class="date">' + data.date + '</p>';
                 html += '</li>';
                 $(html).prependTo('#content');
+                $("#content").listview('refresh');
             });
 
             $("#btnSend").on("click", function(){
-                var $usrName = $("#usrName");
-                var usrName = $usrName.val();
+                var usrName = $("#usrName").val();
                 var $usrMsg = $("#usrMsg");
                 var usrMsg = $usrMsg.val();
                 if( usrName && usrMsg ){
@@ -31,7 +34,6 @@
                         message: usrMsg,
                         date: new Date().toUTCString()
                     });
-                    $usrName.val('');
                     $usrMsg.val('');
                 } else {
                     alert('닉네임이나 메시지를 입력해주세요.');
@@ -41,13 +43,26 @@
     </script>
 </head>
 <body>
-    <h1>socket.io Web Chatting</h1>
-    <p>Chat With Node.js</p>
-    <hr / />
-    <input type="text" id="usrName" placeholder="닉네임" />
-    <input type="text" id="usrMsg" placeholder="메시지" />
-    <button type="button" id="btnSend">전송</button>
-    <ul id="content">
-    </ul>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>socket.io Web Chatting</h1>
+        </div>
+        <div data-role="content">
+            <h2>닉네임</h2>
+            <input type="text" id="usrName" placeholder="닉네임" />
+            <a data-role="button" class="btnChat" href="#chatpage">채팅 시작</a>
+        </div>
+    </div>
+    <div data-role="page" id="chatpage">
+        <div data-role="header">
+            <h2>채팅</h2>
+        </div>
+        <div data-role="content">
+            <input type="text" id="usrMsg" placeholder="메시지" />
+            <button type="button" id="btnSend">전송</button>
+            <ul id="content" data-role="listview" data-inset="true">
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

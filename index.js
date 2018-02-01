@@ -16,7 +16,7 @@ var io = socketio.listen(server); // 소켓서버 생성 및 실행
 io.sockets.on('connection', function(socket){
     console.log('connection 이벤트 발생 !!!');
     socket.on('sendMsg', function(data){
-        console.log('sendMsg 이벤트 발생 :: ' + data);
+        console.log('sendMsg 이벤트 발생 :: ', data);
         io.sockets.emit('outputMsg', data); // 클라이언트쪽에서 input text 입력받은 값
     });
 });
