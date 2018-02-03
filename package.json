@@ -1,5 +1,5 @@
 {
-  "name": "movie",
+  "name": "painter",
   "version": "1.0.0",
   "description": "Node.js 프로그래밍 예제 실습 ==========================",
   "main": "app.js",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yeobiya/nodejs-socketio-practice#readme",
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "socket.io": "^1.7.4"
   }
