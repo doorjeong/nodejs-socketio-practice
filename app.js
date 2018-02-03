@@ -43,7 +43,8 @@ server.listen(3000, function () {
 var io = socketio.listen(server);
 io.sockets.on('connection', function (socket) {
     socket.on('reserve', function (data) {
-        seats[data.y][data.x] = 2;
+        seats[data.y][data.x] = parseInt(data.user);
+        seats[data.y][data.x]['color'] = data.color
         io.sockets.emit('reserve', data);
     });
 });
